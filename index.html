@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teja Mallireddy — Software Engineer · Java + AI</title>
+<meta name="description" content="Teja Mallireddy — Full-stack software engineer building resilient Java/Spring Boot microservices and bringing AI natively into the JVM." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0A0E16;
+    --bg-elev:#101622;
+    --bg-elev-2:#0D1320;
+    --border:#222B3D;
+    --border-soft:#1A2233;
+    --text:#ECEFF4;
+    --text-dim:#98A2B6;
+    --text-faint:#606B80;
+    --green:#4FCB8B;
+    --green-bright:#5FE0A0;
+    --green-dim:rgba(79,203,139,.12);
+    --blue:#5BA8FF;
+    --blue-dim:rgba(91,168,255,.10);
+    --amber:#E0A33B;
+    --maxw:1080px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ambient backdrop */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+      radial-gradient(620px 480px at 88% -4%, rgba(79,203,139,.10), transparent 60%),
+      radial-gradient(680px 540px at 2% 102%, rgba(91,168,255,.08), transparent 60%);
+    pointer-events:none;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background-image:radial-gradient(rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size:26px 26px;
+    pointer-events:none;
+  }
+
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  a{color:inherit;text-decoration:none}
+
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:.78rem;
+    letter-spacing:.04em;
+    color:var(--green);
+    text-transform:lowercase;
+  }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(10,14,22,.72);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s,background .3s;
+  }
+  header.nav.scrolled{border-bottom-color:var(--border-soft)}
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:0 28px;
+    height:64px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{font-family:"IBM Plex Mono",monospace;font-size:.95rem;font-weight:500;letter-spacing:.02em;color:var(--text);display:flex;align-items:center;gap:9px}
+  .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(79,203,139,.5);animation:beat 2.6s var(--ease) infinite}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-size:.9rem;color:var(--text-dim);transition:color .2s;position:relative;padding:4px 0}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--green);transition:width .25s var(--ease)}
+  .nav-links a:hover,.nav-links a.active{color:var(--text)}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+  .nav-cta{
+    font-family:"IBM Plex Mono",monospace;font-size:.82rem;
+    border:1px solid var(--border);color:var(--text);
+    padding:8px 15px;border-radius:8px;transition:.22s var(--ease);
+    background:var(--bg-elev);
+  }
+  .nav-cta:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px)}
+  .nav-toggle{display:none;background:none;border:1px solid var(--border);border-radius:8px;width:40px;height:38px;cursor:pointer;color:var(--text)}
+  .nav-toggle span{display:block;width:18px;height:1.8px;background:currentColor;margin:3.5px auto;transition:.25s}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 80px;position:relative}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .status-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:"IBM Plex Mono",monospace;font-size:.74rem;
+    color:var(--text-dim);border:1px solid var(--border-soft);
+    background:var(--bg-elev);padding:6px 12px;border-radius:999px;margin-bottom:24px;
+  }
+  .status-pill .live{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .hero h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:clamp(2.1rem,5.2vw,3.4rem);
+    line-height:1.06;
+    letter-spacing:-.02em;
+    margin-bottom:22px;
+  }
+  .hero h1 .hl{color:var(--green);position:relative}
+  .hero p.lead{font-size:1.06rem;color:var(--text-dim);max-width:30em;margin-bottom:32px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px}
+  .btn{
+    font-family:"IBM Plex Mono",monospace;font-size:.86rem;
+    padding:12px 20px;border-radius:9px;transition:.22s var(--ease);
+    display:inline-flex;align-items:center;gap:9px;border:1px solid transparent;
+  }
+  .btn-primary{background:var(--green);color:#06130C;font-weight:500}
+  .btn-primary:hover{background:var(--green-bright);transform:translateY(-2px);box-shadow:0 8px 24px -8px rgba(79,203,139,.5)}
+  .btn-ghost{border-color:var(--border);color:var(--text);background:var(--bg-elev)}
+  .btn-ghost:hover{border-color:var(--text-dim);transform:translateY(-2px)}
+  .stat-row{display:flex;gap:30px;flex-wrap:wrap}
+  .stat .num{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.5rem;color:var(--text);line-height:1}
+  .stat .lbl{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--text-faint);margin-top:5px}
+
+  /* ---------- topology signature ---------- */
+  .topo-wrap{
+    border:1px solid var(--border-soft);
+    background:linear-gradient(180deg,var(--bg-elev),var(--bg-elev-2));
+    border-radius:16px;padding:14px;position:relative;overflow:hidden;
+  }
+  .topo-wrap::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--border-soft) 1px,transparent 1px),linear-gradient(90deg,var(--border-soft) 1px,transparent 1px);
+    background-size:34px 34px;opacity:.35;pointer-events:none;
+    -webkit-mask-image:radial-gradient(circle at 50% 45%,#000 55%,transparent 100%);
+            mask-image:radial-gradient(circle at 50% 45%,#000 55%,transparent 100%);
+  }
+  .topo-head{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 12px;position:relative}
+  .topo-head .t{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--text-dim)}
+  .topo-head .meta{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--green)}
+  .topo-svg{width:100%;height:auto;display:block;position:relative}
+
+  .edge{fill:none;stroke:var(--green);stroke-width:1.6;stroke-opacity:.55;stroke-dasharray:5 11;animation:flow 1.6s linear infinite}
+  .edge-dot{fill:none;stroke:var(--blue);stroke-width:1.3;stroke-opacity:.4;stroke-dasharray:1 7;animation:flow 3.4s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-32}}
+
+  .node rect{fill:#121A28;stroke:var(--border);stroke-width:1;rx:9}
+  .node.hub rect{fill:#13202C;stroke:rgba(79,203,139,.5)}
+  .node.llm rect{fill:#161426;stroke:rgba(91,168,255,.45)}
+  .node .label{font-family:"IBM Plex Mono",monospace;font-size:11px;fill:var(--text);font-weight:500}
+  .node .sub{font-family:"IBM Plex Mono",monospace;font-size:8.5px;fill:var(--text-faint)}
+  .node .sdot{fill:var(--green)}
+  .node.obs .sdot{fill:var(--blue)}
+  .pulse{fill:var(--green);opacity:.25;transform-origin:center;transform-box:fill-box;animation:halo 2.4s ease-out infinite}
+  .node.obs .pulse{fill:var(--blue)}
+  @keyframes halo{0%{transform:scale(1);opacity:.45}70%{transform:scale(3.4);opacity:0}100%{opacity:0}}
+
+  /* ---------- sections ---------- */
+  section{padding:88px 0;scroll-margin-top:78px;position:relative}
+  .sec-head{margin-bottom:48px}
+  .sec-head .eyebrow{display:block;margin-bottom:12px}
+  .sec-head h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.7rem,3.6vw,2.3rem);letter-spacing:-.015em}
+  .sec-head .sub{color:var(--text-dim);margin-top:10px;max-width:46em}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:54px;align-items:start}
+  .about-body p{color:var(--text-dim);margin-bottom:18px}
+  .about-body p strong{color:var(--text);font-weight:600}
+  .about-side{border-left:1px solid var(--border-soft);padding-left:26px}
+  .about-side .row{margin-bottom:20px}
+  .about-side .k{font-family:"IBM Plex Mono",monospace;font-size:.72rem;color:var(--text-faint);margin-bottom:4px}
+  .about-side .v{font-size:.94rem;color:var(--text)}
+  .about-side .v.green{color:var(--green)}
+
+  /* skills */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .skill-card{border:1px solid var(--border-soft);background:var(--bg-elev);border-radius:12px;padding:22px 22px 20px;transition:.25s var(--ease)}
+  .skill-card:hover{border-color:var(--border);transform:translateY(-3px)}
+  .skill-card .cat{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--green);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .skill-card .cat::before{content:"";width:14px;height:1px;background:var(--green)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--text-dim);border:1px solid var(--border-soft);background:var(--bg-elev-2);padding:4px 10px;border-radius:7px;transition:.2s}
+  .skill-card:hover .chip{border-color:var(--border)}
+
+  /* experience */
+  .xp{position:relative;padding-left:30px}
+  .xp::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--border-soft)}
+  .xp-item{position:relative;padding-bottom:42px}
+  .xp-item:last-child{padding-bottom:0}
+  .xp-item::before{content:"";position:absolute;left:-29.5px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--green)}
+  .xp-item .when{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--text-faint);margin-bottom:6px}
+  .xp-item h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.15rem}
+  .xp-item .org{color:var(--green);font-size:.92rem;margin:3px 0 14px;font-family:"IBM Plex Mono",monospace}
+  .xp-item ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .xp-item li{color:var(--text-dim);font-size:.95rem;padding-left:20px;position:relative}
+  .xp-item li::before{content:"▹";position:absolute;left:0;color:var(--green);font-size:.8rem;top:1px}
+  .award{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--amber);border:1px solid rgba(224,163,59,.3);background:rgba(224,163,59,.06);padding:5px 11px;border-radius:7px}
+
+  /* projects */
+  .proj-feature{
+    border:1px solid var(--border);border-radius:16px;overflow:hidden;
+    background:linear-gradient(165deg,rgba(79,203,139,.05),var(--bg-elev) 45%);
+    margin-bottom:24px;
+  }
+  .pf-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:28px 30px 0;flex-wrap:wrap}
+  .pf-tag{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--green);border:1px solid rgba(79,203,139,.35);padding:4px 10px;border-radius:999px;background:var(--green-dim)}
+  .proj-feature h3{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:1.5rem;padding:18px 30px 4px;letter-spacing:-.01em}
+  .proj-feature .role{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--text-dim);padding:0 30px 18px}
+  .pf-stats{display:flex;gap:0;border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);margin:0 30px}
+  .pf-stats .s{flex:1;padding:16px 4px;text-align:center;border-right:1px solid var(--border-soft)}
+  .pf-stats .s:last-child{border-right:none}
+  .pf-stats .s .n{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.3rem;color:var(--green)}
+  .pf-stats .s .l{font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--text-faint);margin-top:4px}
+  .proj-feature ul{list-style:none;padding:24px 30px;display:flex;flex-direction:column;gap:11px}
+  .proj-feature li{color:var(--text-dim);font-size:.95rem;padding-left:22px;position:relative}
+  .proj-feature li::before{content:"▹";position:absolute;left:0;color:var(--green);top:1px}
+  .pf-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 30px 26px;flex-wrap:wrap}
+  .pf-stack{display:flex;flex-wrap:wrap;gap:7px;max-width:80%}
+
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .proj-card{border:1px solid var(--border-soft);background:var(--bg-elev);border-radius:13px;padding:24px;display:flex;flex-direction:column;transition:.25s var(--ease)}
+  .proj-card:hover{border-color:var(--green);transform:translateY(-4px)}
+  .pc-icon{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--text-faint);margin-bottom:16px}
+  .proj-card h4{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.15rem;margin-bottom:10px}
+  .proj-card p{color:var(--text-dim);font-size:.9rem;margin-bottom:16px;flex-grow:1}
+  .proj-card .pc-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .proj-link{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--green);display:inline-flex;align-items:center;gap:7px;transition:gap .2s}
+  .proj-link:hover{gap:11px}
+
+  /* education + certs */
+  .ec-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  .ec-block h3{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--green);margin-bottom:20px;letter-spacing:.04em}
+  .edu-item{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border-soft)}
+  .edu-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .edu-item .deg{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.05rem}
+  .edu-item .school{color:var(--text-dim);font-size:.9rem;margin-top:3px}
+  .edu-item .yr{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--text-faint);margin-top:5px}
+  .cert-list{list-style:none;display:flex;flex-direction:column;gap:13px}
+  .cert-list li{display:flex;align-items:center;gap:12px;color:var(--text-dim);font-size:.94rem}
+  .cert-list li::before{content:"◆";color:var(--green);font-size:.7rem}
+
+  /* contact */
+  .contact{text-align:center;padding-top:96px}
+  .contact .eyebrow{margin-bottom:16px}
+  .contact h2{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3rem);letter-spacing:-.02em;margin-bottom:18px}
+  .contact p{color:var(--text-dim);max-width:32em;margin:0 auto 36px}
+  .contact-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:46px}
+  .social-row{display:flex;gap:26px;justify-content:center}
+  .social-row a{font-family:"IBM Plex Mono",monospace;font-size:.84rem;color:var(--text-dim);transition:color .2s;display:inline-flex;align-items:center;gap:8px}
+  .social-row a:hover{color:var(--green)}
+
+  footer{border-top:1px solid var(--border-soft);padding:30px 0;margin-top:40px}
+  .foot-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .foot-inner span{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--text-faint)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  @keyframes beat{0%,100%{box-shadow:0 0 0 0 rgba(79,203,139,.45)}50%{box-shadow:0 0 0 5px rgba(79,203,139,0)}}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .topo-wrap{order:-1}
+    .about-grid{grid-template-columns:1fr;gap:34px}
+    .about-side{border-left:none;border-top:1px solid var(--border-soft);padding-left:0;padding-top:26px}
+    .skills-grid{grid-template-columns:1fr}
+    .proj-grid{grid-template-columns:1fr}
+    .ec-grid{grid-template-columns:1fr;gap:38px}
+    .nav-links,.nav-cta{display:none}
+    .nav-toggle{display:block}
+    header.nav.open .nav-links{
+      display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;
+      background:var(--bg-elev);border-bottom:1px solid var(--border);padding:18px 28px;gap:18px;
+    }
+    header.nav.open .nav-cta{display:inline-flex;margin-top:6px;width:max-content}
+  }
+  @media(max-width:520px){
+    .container{padding:0 20px}
+    .stat-row{gap:22px}
+    .pf-stats{flex-wrap:wrap}
+    .pf-stats .s{flex:1 1 50%;border-bottom:1px solid var(--border-soft)}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .edge,.edge-dot{animation:none;stroke-dashoffset:0}
+    .pulse,.brand .dot,.status-pill .live{animation:none}
+    .reveal{opacity:1;transform:none;transition:none}
+    *{transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>teja.mallireddy</a>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="mailto:tejamallireddy18021998@gmail.com" class="nav-cta">Get in touch</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="status-pill"><span class="live"></span>system operational — open to software engineering roles</span>
+          <h1>I build distributed systems that stay up and bring real <span class="hl">AI into the Java world</span>.</h1>
+          <p class="lead">Full-stack engineer with nearly 4 years shipping enterprise insurance platforms in Java and Spring Boot. Now, I design resilient microservices and wire local LLMs directly into the JVM with Spring AI.</p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">View my work →</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          </div>
+          <div class="stat-row">
+            <div class="stat"><div class="num">nearly 4</div><div class="lbl">yrs enterprise Java</div></div>
+            <div class="stat"><div class="num">5</div><div class="lbl">microservices, shipped</div></div>
+            <div class="stat"><div class="num">10+</div><div class="lbl">containers, one command</div></div>
+          </div>
+        </div>
+
+        <!-- SIGNATURE: live service topology of DailyMate -->
+        <div class="topo-wrap" aria-hidden="true">
+          <div class="topo-head">
+            <span class="t">dailymate · service topology</span>
+            <span class="meta">● live</span>
+          </div>
+          <svg class="topo-svg" viewBox="0 0 560 480" preserveAspectRatio="xMidYMid meet" role="img">
+            <!-- edges (solid = request flow) -->
+            <path class="edge" d="M128,66 C170,66 168,230 200,230"/>
+            <path class="edge" d="M340,230 C380,230 378,74 416,74"/>
+            <path class="edge" d="M340,230 C380,230 378,162 416,162"/>
+            <path class="edge" d="M340,230 C380,230 378,250 416,250"/>
+            <path class="edge" d="M340,230 C374,230 372,340 404,340"/>
+            <path class="edge" d="M474,364 L474,404"/>
+            <!-- edges (dotted = observability scrape) -->
+            <path class="edge-dot" d="M234,410 C234,360 252,292 270,254"/>
+            <path class="edge-dot" d="M318,431 C404,431 478,418 474,364"/>
+
+            <!-- nodes -->
+            <!-- client -->
+            <g class="node">
+              <rect x="8" y="44" width="120" height="44" rx="9"/>
+              <circle class="pulse" cx="24" cy="66" r="3.2"/><circle class="sdot" cx="24" cy="66" r="3.2"/>
+              <text class="label" x="38" y="63">React UI</text>
+              <text class="sub" x="38" y="76">client</text>
+            </g>
+            <!-- gateway (hub) -->
+            <g class="node hub">
+              <rect x="200" y="206" width="140" height="48" rx="10"/>
+              <circle class="pulse" cx="218" cy="230" r="3.4"/><circle class="sdot" cx="218" cy="230" r="3.4"/>
+              <text class="label" x="232" y="227">API Gateway</text>
+              <text class="sub" x="232" y="241">spring cloud · jwt</text>
+            </g>
+            <!-- auth -->
+            <g class="node">
+              <rect x="416" y="52" width="132" height="44" rx="9"/>
+              <circle class="pulse" cx="432" cy="74" r="3.2"/><circle class="sdot" cx="432" cy="74" r="3.2"/>
+              <text class="label" x="446" y="71">auth-service</text>
+              <text class="sub" x="446" y="84">jwt issue / verify</text>
+            </g>
+            <!-- task -->
+            <g class="node">
+              <rect x="416" y="140" width="132" height="44" rx="9"/>
+              <circle class="pulse" cx="432" cy="162" r="3.2"/><circle class="sdot" cx="432" cy="162" r="3.2"/>
+              <text class="label" x="446" y="159">task-service</text>
+              <text class="sub" x="446" y="172">postgres</text>
+            </g>
+            <!-- notification -->
+            <g class="node">
+              <rect x="416" y="228" width="132" height="44" rx="9"/>
+              <circle class="pulse" cx="432" cy="250" r="3.2"/><circle class="sdot" cx="432" cy="250" r="3.2"/>
+              <text class="label" x="446" y="247">notification</text>
+              <text class="sub" x="446" y="260">kafka events</text>
+            </g>
+            <!-- ai orchestrator -->
+            <g class="node hub">
+              <rect x="404" y="316" width="144" height="48" rx="10"/>
+              <circle class="pulse" cx="422" cy="340" r="3.4"/><circle class="sdot" cx="422" cy="340" r="3.4"/>
+              <text class="label" x="436" y="337">ai-orchestrator</text>
+              <text class="sub" x="436" y="351">spring ai · resilience4j</text>
+            </g>
+            <!-- llm -->
+            <g class="node llm">
+              <rect x="410" y="404" width="128" height="44" rx="9"/>
+              <circle class="pulse" cx="426" cy="426" r="3.2" style="fill:var(--blue)"/><circle class="sdot" cx="426" cy="426" r="3.2" style="fill:var(--blue)"/>
+              <text class="label" x="440" y="423">LLM · Ollama</text>
+              <text class="sub" x="440" y="436">gemma3 · local</text>
+            </g>
+            <!-- observability -->
+            <g class="node obs">
+              <rect x="150" y="410" width="168" height="42" rx="9"/>
+              <circle class="pulse" cx="166" cy="431" r="3.2"/><circle class="sdot" cx="166" cy="431" r="3.2"/>
+              <text class="label" x="180" y="428">Grafana + Prometheus</text>
+              <text class="sub" x="180" y="441">scraping actuator</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// about</span>
+        <h2>Enterprise backend, with one foot in what's next.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-body reveal">
+          <p>For nearly four years at <strong>LTIMindtree</strong>, I built backend modules from the ground up for three enterprise insurance products owning features end to 
+            end from requirements and API design through testing and production deployment. I got comfortable doing the unglamorous part well like tracing escalated defects through codebases I didn't write, isolating root causes and shipping fixes that hold.</p>
+          <p>What I'm building now is the part I'm most excited about. Most AI tooling lives in Python. So, I deliberately build mine in <strong>Java and Spring AI</strong>, wiring local LLMs straight into the JVM. <strong>DailyMate</strong> is a fully containerized assistant where five microservices, circuit breakers and a local model all behave like a real production system.</p>
+          <p>I care about systems that are boring in the best way to  observable, resilient and predictable under load. Currently finishing my M.S. in Computer Science and looking for a software engineering team to do that work with.</p>
+        </div>
+        <div class="about-side reveal">
+          <div class="row"><div class="k">focus</div><div class="v">Java · Spring Boot · Distributed Systems</div></div>
+          <div class="row"><div class="k">edge</div><div class="v green">AI / LLM integration on the JVM</div></div>
+          <div class="row"><div class="k">based in</div><div class="v">Sioux Falls, SD · open to U.S. relocation</div></div>
+          <div class="row"><div class="k">status</div><div class="v">M.S. Computer Science — May 2026</div></div>
+          <div class="row"><div class="k">recognition</div><div class="v">"Super Crew" Award, LTIMindtree</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// stack</span>
+        <h2>Tools I reach for.</h2>
+        <p class="sub">Heaviest on the backend and distributed-systems side, with a growing toolkit for shipping AI in Java.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="cat">programming languages</div>
+          <div class="chips">
+            <span class="chip">Java (8 / 11 / 21)</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">PL/SQL</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">backend &amp; frameworks</div>
+          <div class="chips">
+            <span class="chip">Spring Boot</span><span class="chip">Spring MVC</span><span class="chip">Spring Data JPA</span><span class="chip">Spring Security</span><span class="chip">Spring Cloud Gateway</span><span class="chip">Spring AI</span><span class="chip">OpenFeign</span><span class="chip">Resilience4j</span><span class="chip">Hibernate</span><span class="chip">JWT</span><span class="chip">RESTful APIs</span><span class="chip">Microservices</span><span class="chip">Apache Kafka</span><span class="chip">Redis</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">frontend</div>
+          <div class="chips">
+            <span class="chip">React.js</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">Bootstrap</span><span class="chip">jQuery</span><span class="chip">Responsive Design</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">genai &amp; llm</div>
+          <div class="chips">
+            <span class="chip">Spring AI</span><span class="chip">Ollama</span><span class="chip">Local LLM Inference</span><span class="chip">Prompt Engineering</span><span class="chip">AI Agents</span><span class="chip">LLM Integration</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">build &amp; devops</div>
+          <div class="chips">
+            <span class="chip">Maven</span><span class="chip">Jenkins (CI/CD)</span><span class="chip">Docker</span><span class="chip">Docker Compose</span><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">Spring Boot Actuator</span><span class="chip">GitHub Actions</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">cloud &amp; servers</div>
+          <div class="chips">
+            <span class="chip">Microsoft Azure (AZ-900)</span><span class="chip">Apache Tomcat</span><span class="chip">Oracle WebLogic</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">databases</div>
+          <div class="chips">
+            <span class="chip">MySQL</span><span class="chip">Oracle SQL</span><span class="chip">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">version control</div>
+          <div class="chips">
+            <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">Bitbucket</span><span class="chip">SourceTree</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">testing &amp; quality</div>
+          <div class="chips">
+            <span class="chip">JUnit</span><span class="chip">Mockito</span><span class="chip">Postman</span><span class="chip">Katalon Studio</span><span class="chip">SonarQube</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="cat">methodologies</div>
+          <div class="chips">
+            <span class="chip">Agile (Scrum / Kanban)</span><span class="chip">Waterfall</span><span class="chip">System Design</span><span class="chip">Design Patterns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// experience</span>
+        <h2>Where I've worked.</h2>
+      </div>
+      <div class="xp">
+        <div class="xp-item reveal">
+          <div class="when">Dec 2020 — Aug 2024</div>
+          <h3>Software Engineer · Full-Stack (Java / Spring Boot / React)</h3>
+          <div class="org">LTIMindtree — client: The Norfolk &amp; Dedham Group (Insurance)</div>
+          <ul>
+            <li>Built backend modules from the ground up for 3 enterprise insurance products, owning features end to end from requirements and API design through testing and production deployment.</li>
+            <li>Designed production RESTful APIs in Java 8/11 and Spring Boot for policy workflows like service contracts, request/response schemas, error semantics and authentication patterns consumed by web clients.</li>
+            <li>Engineered persistence with Spring Data JPA and Hibernate on Oracle SQL like diagnosed and restructured a slow query delaying UI loads, cutting page load latency.</li>
+            <li>Resolved escalated production defects in modules I hadn't written, tracing unfamiliar codebases to root cause and shipping fixes.</li>
+          </ul>
+          <span class="award">★ "Super Crew" Award — high-quality delivery &amp; ownership</span>
+        </div>
+        <div class="xp-item reveal">
+          <div class="when">Jun 2025 — May 2026</div>
+          <h3>Student Lead</h3>
+          <div class="org">Sodexo — University of South Dakota</div>
+          <ul>
+            <li>Led a team of 10+ in a high volume operations environment while completing an M.S. like building scheduling, conflict resolution and team leadership skills that carry directly into engineering teams.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// projects</span>
+        <h2>Things I've built.</h2>
+        <p class="sub">Production shaped side projects that are distributed, containerized and observable not toy demos.</p>
+      </div>
+
+      <!-- featured -->
+      <div class="proj-feature reveal">
+        <div class="pf-top">
+          <span class="pf-tag">★ flagship</span>
+          <a href="https://github.com/tejamallireddy" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+        </div>
+        <h3>DailyMate — AI-Powered Personal Assistant</h3>
+        <div class="role">GenAI agent + microservices · Java 21 · Spring Boot 3.5</div>
+        <div class="pf-stats">
+          <div class="s"><div class="n">5</div><div class="l">spring boot services</div></div>
+          <div class="s"><div class="n">10+</div><div class="l">docker containers</div></div>
+          <div class="s"><div class="n">100%</div><div class="l">local LLM (ollama)</div></div>
+          <div class="s"><div class="n">1</div><div class="l">command to start</div></div>
+        </div>
+        <ul>
+          <li>Built a GenAI agent that turns plain English into task actions via a local LLM (Ollama / Gemma3) through Spring AI, using a token protocol with code side intent resolution for reliable, hallucination resistant targeting.</li>
+          <li>Architected 5 Spring Boot microservices behind a JWT-secured Spring Cloud Gateway  that is isolated databases per service, OpenFeign inter service calls, Kafka events, and Resilience4j circuit breakers that fail safe instead of cascading.</li>
+          <li>Instrumented every service with Actuator + Micrometer, scraped by Prometheus and visualized in Grafana which  includes live circuit breaker dashboards. The full stack (10+ containers, including the model) runs with one Docker Compose command.</li>
+        </ul>
+        <div class="pf-foot">
+          <div class="pf-stack">
+            <span class="chip">Spring AI</span><span class="chip">Ollama</span><span class="chip">Spring Cloud Gateway</span><span class="chip">OpenFeign</span><span class="chip">Resilience4j</span><span class="chip">Kafka</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">React</span><span class="chip">Docker</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- grid -->
+      <div class="proj-grid">
+        <div class="proj-card reveal">
+          <div class="pc-icon">[ microservices · jwt ]</div>
+          <h4>Quizzr</h4>
+          <p>A quiz platform of 5 Spring Boot services over Netflix Eureka with OpenFeign, centralized JWT auth at the gateway (USER / ADMIN roles) and a separation of concerns scoring flow that keeps answer data in its bounded context.</p>
+          <div class="pc-stack">
+            <span class="chip">Eureka</span><span class="chip">OpenFeign</span><span class="chip">JWT</span><span class="chip">React</span><span class="chip">Docker</span>
+          </div>
+          <a href="https://github.com/tejamallireddy" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+        </div>
+
+        <div class="proj-card reveal">
+          <div class="pc-icon">[ spring ai · ollama ]</div>
+          <h4>AI Chat Application</h4>
+          <p>A containerized chat app on Spring AI and Ollama with local LLM inference, conversational memory and REST APIs are deployed end to end via Docker Compose.</p>
+          <div class="pc-stack">
+            <span class="chip">Spring AI</span><span class="chip">Ollama</span><span class="chip">REST</span><span class="chip">Docker</span>
+          </div>
+          <a href="https://github.com/tejamallireddy" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+        </div>
+
+        <div class="proj-card reveal">
+          <div class="pc-icon">[ full-stack · crud ]</div>
+          <h4>Student Kart</h4>
+          <p>A responsive marketplace for buying and selling used academic items by using full CRUD, REST integration and dynamic listing management.</p>
+          <div class="pc-stack">
+            <span class="chip">JavaScript</span><span class="chip">REST APIs</span><span class="chip">HTML / CSS</span>
+          </div>
+          <a href="https://github.com/tejamallireddy" target="_blank" rel="noopener" class="proj-link">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION + CERTS -->
+  <section id="education">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="eyebrow">// credentials</span>
+        <h2>Education &amp; certifications.</h2>
+      </div>
+      <div class="ec-grid">
+        <div class="ec-block reveal">
+          <h3>EDUCATION</h3>
+          <div class="edu-item">
+            <div class="deg">M.S. in Computer Science</div>
+            <div class="school">University of South Dakota — Vermillion, SD</div>
+            <div class="yr">May 2026</div>
+          </div>
+          <div class="edu-item">
+            <div class="deg">B.Tech in Computer Science &amp; Engineering</div>
+            <div class="school">Sree Venkateswara College of Engineering — India</div>
+            <div class="yr">Sep 2020</div>
+          </div>
+        </div>
+        <div class="ec-block reveal">
+          <h3>CERTIFICATIONS</h3>
+          <ul class="cert-list">
+            <li>Microsoft Azure Fundamentals (AZ-900)</li>
+            <li>Databases for Developers: Foundations — Oracle</li>
+            <li>Spring Framework — Udemy</li>
+            <li>Python Programming — Udemy</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <span class="eyebrow reveal">// contact</span>
+      <h2 class="reveal">Let's build something that stays up.</h2>
+      <p class="reveal">I'm open to software engineering roles and happy to talk through systems, Spring or shipping AI in Java. The fastest way to reach me is email.</p>
+      <div class="contact-actions reveal">
+        <a href="mailto:tejamallireddy18021998@gmail.com" class="btn btn-primary">Email me →</a>
+        <a href="https://linkedin.com/in/teja-mallireddy" target="_blank" rel="noopener" class="btn btn-ghost">Connect on LinkedIn</a>
+      </div>
+      <div class="social-row reveal">
+        <a href="mailto:tejamallireddy18021998@gmail.com">✉ email</a>
+        <a href="https://linkedin.com/in/teja-mallireddy" target="_blank" rel="noopener">in linkedin</a>
+        <a href="https://github.com/tejamallireddy" target="_blank" rel="noopener">⌥ github</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© 2026 Teja Mallireddy</span>
+    <span>built in Java spirit · deployed static</span>
+  </div>
+</footer>
+
+<script>
+  // sticky nav border
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // mobile menu
+  const toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded','false');
+    })
+  );
+
+  // scroll reveal
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+
+  // scrollspy
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const map = {};
+  links.forEach(l => { const id = l.getAttribute('href').slice(1); const s = document.getElementById(id); if(s) map[id]=l; });
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        links.forEach(l => l.classList.remove('active'));
+        const id = e.target.getAttribute('id');
+        if(map[id]) map[id].classList.add('active');
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  Object.values(map).forEach(l => { const s = document.getElementById(l.getAttribute('href').slice(1)); if(s) spy.observe(s); });
+</script>
+</body>
+</html>
